@@ -25,4 +25,5 @@
 #### 使用说明
 
 更多示例详见，http://www.52ejn.com，欢迎+v共同交流学习
+
 ![输入图片说明](weixinqrcode_small.jpg)
