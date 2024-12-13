@@ -24,6 +24,5 @@
 
 #### 使用说明
 
-更多示例详见，http://www.52ejn.com，欢迎扫v交流
-
-![微信号](https://foruda.gitee.com/images/1734106712868701024/fade42aa_607762.jpeg "weixinqrcode.jpg")
+更多示例详见，http://www.52ejn.com，欢迎+v共同交流学习
+![输入图片说明](weixinqrcode_small.jpg)
