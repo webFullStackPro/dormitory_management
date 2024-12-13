@@ -1,0 +1,63 @@
+//color
+$primary-color: #C0392B !default;
+
+$order-none-color: #66b1ff !default;
+$order-pending-color: #67c23a !default;
+$order-timeout-color: #f56c6c !default;
+$text-white-color: #FFFFFF !default;
+
+$light-1-color: #FDFDFD !default;
+$light-2-color: #DDDDDD !default;
+
+$box-shadow-base: rgba(0, 0, 0, .3) !default;
+
+.f12 {
+  font-size: 12px;
+}
+.f13 {
+  font-size: 13px;
+}
+.f14 {
+  font-size: 14px;
+}
+.f15 {
+  font-size: 15px;
+}
+.f16 {
+  font-size: 16px;
+}
+
+.el-menu-item, .el-submenu__title {
+  height: 38px;
+  line-height: 38px;
+
+}
+.el-submenu .el-menu-item {
+  height: 35px;
+  line-height: 35px;
+}
+.el-table--mini td, .el-table--mini th {
+  padding: 1px 0;
+}
+
+.table-header-cell-font {
+  font-size: 13px;
+}
+.table-cell-font {
+  font-size: 12px;
+}
+
+.el-date-editor.el-input, .el-date-editor.el-input__inner {
+  width: 180px;
+}
+
+.form-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
