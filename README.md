@@ -1,7 +1,7 @@
 # dormitory_management
 
 #### 介绍
-宿舍管理系统，纯前端页面，v2_el目录是vue2+elementui实现，v3_el目录是vue3+elementplus实现
+宿舍管理系统，纯前端，v2_el目录是vue2+elementui实现，v3_el目录是vue3+elementplus实现
 
 #### 软件架构
 软件架构说明
@@ -24,6 +24,4 @@
 
 #### 使用说明
 
-更多示例详见，http://www.52ejn.com，欢迎+v共同交流学习
-
-![输入图片说明](weixinqrcode_small.jpg)
+更多示例详见，http://www.52ejn.com，主页有二维码，欢迎+v共同交流学习
