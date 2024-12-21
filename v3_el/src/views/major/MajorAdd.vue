@@ -92,7 +92,7 @@ import FacultySelector from "@/views/faculty/FacultySelector.vue";
 
 const props = defineProps<Id>()
 const majorFormRef = ref<FormInstance | null>(null);
-let majorForm = reactive<MajorForm>({
+const majorForm = reactive<MajorForm>({
   facultyId: 0,
   facultyName: '',
   name: '',

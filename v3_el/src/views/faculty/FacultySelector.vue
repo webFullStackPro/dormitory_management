@@ -56,12 +56,12 @@ import {onMounted, reactive, ref, inject, toRefs, defineEmits} from 'vue';
 import facultyApi from '@/api/facultyApi'
 import type {FacultyQueryForm} from "@/types/req/facultyQueryForm";
 import type {Faculty} from "@/types/resp/faculty";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
+import {type FormInstance} from "element-plus";
 import type {Result} from "@/types/result";
 import type {Page} from "@/types/page";
 
 const facultyQueryFormRef = ref<FormInstance | null>(null);
-let facultyQueryForm = reactive<FacultyQueryForm>({
+const facultyQueryForm = reactive<FacultyQueryForm>({
   name: '',
 })
 

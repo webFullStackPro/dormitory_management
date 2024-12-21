@@ -16,6 +16,7 @@ import DormitoryFeeList from '@/views/dormitoryFee/DormitoryFeeList.vue'
 import StaffList from '@/views/staff/StaffList.vue'
 import RoomMaintenanceRecordList from "@/views/roomMaintenanceRecord/RoomMaintenanceRecordList.vue"
 import DormitoryVisitorList from '@/views/dormitoryVisitor/DormitoryVisitorList.vue'
+import ChartList from '@/views/chart/ChartList.vue'
 
 
 Vue.use(VueRouter)
@@ -91,6 +92,11 @@ const routes = [
             path: '/DormitoryVisitorList',
             name: 'DormitoryVisitorList',
             component: DormitoryVisitorList
+          },
+          {
+            path: '/ChartList',
+            name: 'ChartList',
+            component: ChartList
           }
         ]
       }

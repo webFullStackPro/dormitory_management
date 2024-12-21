@@ -17,9 +17,25 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, inject} from 'vue'
-import {useRoute} from 'vue-router'
-import { Fold, Expand, UserFilled, Grid, Reading, User, OfficeBuilding, House, Key, Tickets, Service, Setting, Avatar } from '@element-plus/icons-vue';
+import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import {
+  Avatar,
+  Expand,
+  Fold,
+  Grid,
+  HomeFilled,
+  House,
+  Key,
+  OfficeBuilding,
+  PieChart,
+  Reading,
+  Service,
+  Setting,
+  Tickets,
+  User,
+  UserFilled
+} from '@element-plus/icons-vue'
 
 const route = useRoute()
 const isCollapse = ref(false);
@@ -35,6 +51,7 @@ const handleSelect = (key: string) => {
 }
 
 const menuItems = [
+  { index: '/Home', icon: HomeFilled, title: '主页' },
   { index: '/AdminList', icon: UserFilled, title: '管理员' },
   { index: '/FacultyList', icon: Grid, title: '院系信息' },
   { index: '/MajorList', icon: Reading, title: '专业信息' },
@@ -45,7 +62,8 @@ const menuItems = [
   { index: '/DormitoryFeeList', icon: Tickets, title: '费用信息' },
   { index: '/StaffList', icon: Service, title: '员工信息' },
   { index: '/RoomMaintenanceRecordList', icon: Setting, title: '房间维护信息' },
-  { index: '/DormitoryVisitorList', icon: Avatar, title: '访客记录' }
+  { index: '/DormitoryVisitorList', icon: Avatar, title: '访客记录' },
+  { index: '/ChartList', icon: PieChart, title: '数据统计' }
 ]
 </script>
 
@@ -66,7 +84,6 @@ const menuItems = [
   font-size: 16px;
   font-weight: bold;
   color: #ffffff;
-  background: adjust-color($primary-color, $lightness: -5%);
   box-shadow: 0 1px 1px 0 $box-shadow-base;
   white-space: nowrap;
 

@@ -2,7 +2,7 @@
   <div class="login-page">
     <div class="login">
       <div class="login__logo"></div>
-      <div class="login__title">XX宿舍管理系统</div>
+      <div class="login__title">{{ $t('title') }}</div>
       <el-form :model="loginForm" :rules="rules" ref="loginForm" @keyup.enter.native="onLogin">
         <el-form-item prop="username">
           <el-input v-model="loginForm.username" placeholder="请输入用户名"></el-input>
@@ -30,6 +30,7 @@
 <script>
 import userApi from '@/api/userApi'
 import captchaMixin from "@/mixins/captchaMixin";
+import {ADMIN_USERNAME, PASSWORD} from "@/const";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Login',
@@ -39,8 +40,8 @@ export default {
   data () {
     return {
       loginForm: {
-        username: 'admin',
-        password: '123456',
+        username: ADMIN_USERNAME,
+        password: PASSWORD,
         verificationCode: ''
       },
       rules: {
@@ -74,13 +75,11 @@ export default {
           this.loading = true
           // 登录验证
           userApi.login(this.loginForm)
-            .then(data => {
-              console.log('data', data)
-              if (data.status === 200 && data.data.code === 1) {
-                this.$message.success('登录成功')
-                const lt = data.data.data
+              .then(resp => {
+                if (resp && resp.code === 1) {
+                  this.$message.success('登录成功')
+                  const lt = resp.data
                 sessionStorage.setItem('backendToken', lt.token)
-                sessionStorage.setItem('type', lt.type)
                 sessionStorage.setItem('uid', lt.uid)
                 sessionStorage.setItem('username', lt.username)
                 this.$router.replace({ path: '/Home' })
@@ -104,21 +103,9 @@ export default {
     },
     refreshCaptcha () {
       this.loginForm.verificationCode = ''
+      this.loginForm.username = ADMIN_USERNAME
+      this.loginForm.password = PASSWORD
       this.drawCaptcha()
-    },
-    onVendorRegister () {
-      this.$router.push({ name: 'VendorRegister' })
-    },
-    handleTypeChange () {
-      if (this.loginForm.type === 1) {
-        this.loginForm.username = 'admin'
-        this.loginForm.password = '123456'
-        return
-      }
-      if (this.loginForm.type === 2) {
-        this.loginForm.username = 'test1'
-        this.loginForm.password = '123456'
-      }
     }
   }
 }

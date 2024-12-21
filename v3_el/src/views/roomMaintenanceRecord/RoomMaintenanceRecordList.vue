@@ -50,9 +50,9 @@
       <el-table-column prop="content" label="维护内容"></el-table-column>
       <el-table-column fixed="right" label="操作" width="250">
         <template v-slot="{ row }">
-          <el-button @click.native.prevent="editRow(row.id)" type="primary">编辑</el-button>
-          <el-button @click.native.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
-          <el-button @click.native.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
+          <el-button @click.prevent="editRow(row.id)" type="primary">编辑</el-button>
+          <el-button @click.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
+          <el-button @click.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -101,7 +101,7 @@ import RoomMaintenanceRecordAdd from "@/views/roomMaintenanceRecord/RoomMaintena
 import RoomMaintenanceRecordView from "@/views/roomMaintenanceRecord/RoomMaintenanceRecordView.vue"
 
 const roomMaintenanceRecordQueryFormRef = ref<FormInstance | null>(null);
-let roomMaintenanceRecordQueryForm = reactive<RoomMaintenanceRecordQueryForm>({
+const roomMaintenanceRecordQueryForm = reactive<RoomMaintenanceRecordQueryForm>({
   roomId: 0,
   roomNumber: '',
   staffId: 0,

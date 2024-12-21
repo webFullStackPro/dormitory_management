@@ -88,7 +88,7 @@ import { Search } from '@element-plus/icons-vue';
 import FacultySelector from "@/views/faculty/FacultySelector.vue";
 
 const majorQueryFormRef = ref<FormInstance | null>(null);
-let majorQueryForm = reactive<MajorQueryForm>({
+const majorQueryForm = reactive<MajorQueryForm>({
   facultyId: 0,
   facultyName: '',
   name: '',

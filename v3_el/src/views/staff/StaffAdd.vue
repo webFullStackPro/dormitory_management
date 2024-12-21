@@ -54,7 +54,7 @@ import type {Id} from "@/types/id";
 
 const props = defineProps<Id>()
 const staffFormRef = ref<FormInstance | null>(null);
-let staffForm = reactive<StaffForm>({
+const staffForm = reactive<StaffForm>({
   name: '',
   phone: '',
   position: '',

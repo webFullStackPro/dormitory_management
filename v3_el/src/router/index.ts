@@ -9,7 +9,7 @@ const router = createRouter({
       name: 'layout',
       component: Layout,
       children: [{
-        path: "/",
+        path: "/Home",
         component: () => import("@/views/Home.vue"),
         name: "Home"
       },{
@@ -56,6 +56,10 @@ const router = createRouter({
         path: "/DormitoryVisitorList",
         component: () => import("@/views/dormitoryVisitor/DormitoryVisitorList.vue"),
         name: "DormitoryVisitorList"
+      },{
+        path: "/ChartList",
+        component: () => import("@/views/chart/ChartList.vue"),
+        name: "ChartList"
       }]
     }
     ,{

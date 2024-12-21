@@ -105,7 +105,7 @@ import { Search } from '@element-plus/icons-vue';
 import DormitoryBuildingSelector from "@/views/dormitoryBuilding/DormitoryBuildingSelector.vue";
 
 const dormitoryRoomQueryFormRef = ref<FormInstance | null>(null);
-let dormitoryRoomQueryForm = reactive<DormitoryRoomQueryForm>({
+const dormitoryRoomQueryForm = reactive<DormitoryRoomQueryForm>({
   buildingId: 0,
   buildingName: '',
   roomNumber: '',

@@ -27,6 +27,7 @@
         <el-button type="primary" @click="onSearch">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onAdd">新增</el-button>
+        <el-button type="primary" @click="onExport">导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -88,6 +89,7 @@ import StudentSelector from "@/views/student/StudentSelector.vue";
 import DormitoryVisitorAdd from "@/views/dormitoryVisitor/DormitoryVisitorAdd.vue"
 import DormitoryVisitorView from "@/views/dormitoryVisitor/DormitoryVisitorView.vue"
 import listQueryMixin from '@/mixins/listQueryMixin'
+
 export default {
   name: 'DormitoryVisitorList',
   components: {DormitoryRoomSelector,StudentSelector,DormitoryVisitorAdd, DormitoryVisitorView},
@@ -135,6 +137,21 @@ export default {
       this.selectedDormitoryVisitorId = ''
       this.dormitoryVisitorAddVisible = true
       this.dormitoryVisitorAddTitle = '访客记录新增'
+    },
+    onExport () {
+      const headers = ['房间号', '学生姓名', '访客姓名', '访客联系电话', '开始时间', '结束时间']
+      const params = Object.assign(this.getPaginationParams(), this.searchParams)
+      this.getPageData(params).then(data => {
+        if (!data || !data.data || data.data.list.length < 1) {
+          this.$message.error('无数据导出')
+          return
+        }
+        const exportData = []
+        for (const d of data.data.list) {
+          exportData.push([d.roomNumber, d.studentName, d.visitorName, d.contactPhone, d.visitStartTime, d.visitEndTime])
+        }
+        this.exportToExcel(headers, exportData)
+      })
     },
     editRow (id) {
       this.selectedDormitoryVisitorId = id

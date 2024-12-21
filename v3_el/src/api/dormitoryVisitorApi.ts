@@ -24,14 +24,14 @@ export default class dormitoryVisitorApi {
 
   static async find (dormitoryVisitorQueryForm: DormitoryVisitorQueryForm): Promise<Result<Page<DormitoryVisitor>>> {
     console.log('dormitoryVisitorApi find params', dormitoryVisitorQueryForm)
-    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(4, dormitoryVisitorApi.dormitoryVisitors)
+    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(dormitoryVisitorApi.dormitoryVisitors)
     return response.data
   }
 
   static async findById (id: number): Promise<Result<DormitoryVisitor>> {
     console.log('dormitoryVisitorApi findById id', id)
     let target = {}
-    for (let a of dormitoryVisitorApi.dormitoryVisitors) {
+    for (const a of dormitoryVisitorApi.dormitoryVisitors) {
       if (a.id === id) {
         target = a
       }

@@ -18,7 +18,7 @@ export default class staffApi {
 
   static async find (params) {
     console.log('staffApi find params', params)
-    const response = await mockApi.queryPageSuccessfully(4, staffApi.staffs)
+    const response = await mockApi.queryPageSuccessfully(staffApi.staffs)
     return response.data
   }
 

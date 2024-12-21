@@ -61,20 +61,12 @@
         </el-row>
         <el-row>
           <el-col :span="11">
-            <el-form-item label="省" prop="province">
-              <el-input v-model="studentForm.province" placeholder="请输入省" maxlength="64"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="市" prop="city">
-              <el-input v-model="studentForm.city" placeholder="请输入市" maxlength="64"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="11">
-            <el-form-item label="区" prop="area">
-              <el-input v-model="studentForm.area" placeholder="请输入区" maxlength="64"></el-input>
+            <el-form-item label="省/市/区">
+              <el-cascader
+                v-model="provinceCityArea"
+                :options="provinceCityAreaOptions"
+                :props="{ expandTrigger: 'hover', value: 'code', label: 'name' }"
+                @change="handleChange"/>
             </el-form-item>
           </el-col>
           <el-col :span="11">
@@ -130,10 +122,11 @@ import type {Student} from "@/types/resp/student";
 import type {Id} from "@/types/id";
 import { Search } from '@element-plus/icons-vue';
 import MajorSelector from "@/views/major/MajorSelector.vue";
+import areas from "@/locales/area.json";
 
 const props = defineProps<Id>()
 const studentFormRef = ref<FormInstance | null>(null);
-let studentForm = reactive<StudentForm>({
+const studentForm = reactive<StudentForm>({
   studentNumber: '',
   name: '',
   gender: undefined,
@@ -150,6 +143,8 @@ let studentForm = reactive<StudentForm>({
   enrollmentDate: '',
   graduationDate: '',
 })
+const provinceCityArea = ref<string[]>([])
+const provinceCityAreaOptions = areas.provinces
 const majorSelectorVisible = ref<boolean>(false)
 const emit = defineEmits<{
   (e: 'resetStudentAddEvent'): void;
@@ -210,6 +205,16 @@ const initStudentFormById = async (id: number) => {
   const resp: Result<Student> = await studentApi.findById(id)
   if (resp && resp.code === 1 && resp.data) {
     Object.assign(studentForm, resp.data)
+    provinceCityArea.value = []
+    if (studentForm.province) {
+      provinceCityArea.value.push(studentForm.province)
+    }
+    if (studentForm.city) {
+      provinceCityArea.value.push(studentForm.city)
+    }
+    if (studentForm.area) {
+      provinceCityArea.value.push(studentForm.area)
+    }
   }
 }
 
@@ -217,6 +222,7 @@ const onReset = () => {
   if (studentFormRef.value) {
     studentFormRef.value.resetFields()
   }
+  provinceCityArea.value = []
   emit('resetStudentAddEvent')
 }
 
@@ -246,6 +252,18 @@ const handleMajorSelectedEvent = (selectedMajor: any) => {
   if (selectedMajor && 'majorId' in selectedMajor && studentForm.majorId !== selectedMajor['majorId']) {
     studentForm.majorId = selectedMajor['majorId']
     studentForm.majorName = selectedMajor['majorName']
+  }
+}
+
+const handleChange = (value: string[]) => {
+  if (value && value.length > 0) {
+    studentForm.province = value[0]
+  }
+  if (value && value.length > 1) {
+    studentForm.city = value[1]
+  }
+  if (value && value.length > 2) {
+    studentForm.area = value[2]
   }
 }
 

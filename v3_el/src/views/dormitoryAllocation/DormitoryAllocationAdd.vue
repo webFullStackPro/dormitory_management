@@ -61,7 +61,7 @@ import StudentSelector from "@/views/student/StudentSelector.vue";
 
 const props = defineProps<Id>()
 const dormitoryAllocationFormRef = ref<FormInstance | null>(null);
-let dormitoryAllocationForm = reactive<DormitoryAllocationForm>({
+const dormitoryAllocationForm = reactive<DormitoryAllocationForm>({
   roomId: 0,
   roomNumber: '',
   studentId: 0,

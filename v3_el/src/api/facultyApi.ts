@@ -23,14 +23,14 @@ export default class facultyApi {
 
   static async find (facultyQueryForm: FacultyQueryForm): Promise<Result<Page<Faculty>>> {
     console.log('facultyApi find params', facultyQueryForm)
-    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(4, facultyApi.facultys)
+    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(facultyApi.facultys)
     return response.data
   }
 
   static async findById (id: number): Promise<Result<Faculty>> {
     console.log('facultyApi findById id', id)
     let target = {}
-    for (let a of facultyApi.facultys) {
+    for (const a of facultyApi.facultys) {
       if (a.id === id) {
         target = a
       }

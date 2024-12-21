@@ -31,6 +31,7 @@
         <el-button type="primary" @click="onSearch">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onAdd">新增</el-button>
+        <el-button type="primary" @click="onExport">导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -71,9 +72,9 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="250">
         <template v-slot="{ row }">
-          <el-button @click.native.prevent="editRow(row.id)" type="primary">编辑</el-button>
-          <el-button @click.native.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
-          <el-button @click.native.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
+          <el-button @click.prevent="editRow(row.id)" type="primary">编辑</el-button>
+          <el-button @click.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
+          <el-button @click.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -104,20 +105,22 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref, inject, toRefs} from 'vue';
+import { inject, onMounted, reactive, ref, toRefs } from 'vue'
 import dormitoryRoomApi from '@/api/dormitoryRoomApi'
-import type {DormitoryRoomQueryForm} from "@/types/req/dormitoryRoomQueryForm";
-import type {DormitoryRoom} from "@/types/resp/dormitoryRoom";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
-import type {Result} from "@/types/result";
-import type {Page} from "@/types/page";
-import { Search } from '@element-plus/icons-vue';
-import DormitoryBuildingSelector from "@/views/dormitoryBuilding/DormitoryBuildingSelector.vue";
-import DormitoryRoomAdd from "@/views/dormitoryRoom/DormitoryRoomAdd.vue"
-import DormitoryRoomView from "@/views/dormitoryRoom/DormitoryRoomView.vue"
+import type { DormitoryRoomQueryForm } from '@/types/req/dormitoryRoomQueryForm'
+import type { DormitoryRoom } from '@/types/resp/dormitoryRoom'
+import { ElMessage, ElMessageBox, type FormInstance } from 'element-plus'
+import type { Result } from '@/types/result'
+import type { Page } from '@/types/page'
+import { Search } from '@element-plus/icons-vue'
+import DormitoryBuildingSelector from '@/views/dormitoryBuilding/DormitoryBuildingSelector.vue'
+import DormitoryRoomAdd from '@/views/dormitoryRoom/DormitoryRoomAdd.vue'
+import DormitoryRoomView from '@/views/dormitoryRoom/DormitoryRoomView.vue'
+import { exportToExcel } from '@/composables/exportUtil.ts'
+import { getRoomTypeText, getYesOrNoText } from '@/composables/dictTranslator.ts'
 
 const dormitoryRoomQueryFormRef = ref<FormInstance | null>(null);
-let dormitoryRoomQueryForm = reactive<DormitoryRoomQueryForm>({
+const dormitoryRoomQueryForm = reactive<DormitoryRoomQueryForm>({
   buildingId: 0,
   buildingName: '',
   roomNumber: '',
@@ -262,6 +265,22 @@ const handleCloseDormitoryRoomAddEvent = (params: { search?: boolean } | undefin
     onSearch()
   }
   dormitoryRoomAddVisible.value = false
+}
+
+const onExport = () => {
+  const headers = ['楼栋名称', '房间号', '所在楼层', '房间类型', '是否有独立卫生间', '是否有空调', '是否有无线网络']
+  dormitoryRoomApi.find(dormitoryRoomQueryForm).then(data => {
+    if (!data || !data.data || data.data.list.length < 1) {
+      ElMessage.error('无数据导出')
+      return
+    }
+    const exportData = []
+    for (const d of data.data.list) {
+      exportData.push([d.buildingName, d.roomNumber, d.floorNumber, getRoomTypeText(d.roomType),
+        getYesOrNoText(d.hasBathroom), getYesOrNoText(d.hasAirConditioning), getYesOrNoText(d.hasWifi)])
+    }
+    exportToExcel(headers, exportData)
+  })
 }
 </script>
 

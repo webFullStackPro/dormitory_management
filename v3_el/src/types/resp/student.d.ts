@@ -10,8 +10,11 @@ export interface Student {
   contactPhone: string;
   email: string;
   province: string;
+  provinceName: string;
   city: string;
+  cityName: string;
   area: string;
+  areaName: string;
   address: string;
   enrollmentDate: string;
   graduationDate: string;

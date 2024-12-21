@@ -17,7 +17,7 @@ export default class facultyApi {
 
   static async find (params) {
     console.log('facultyApi find params', params)
-    const response = await mockApi.queryPageSuccessfully(4, facultyApi.facultys)
+    const response = await mockApi.queryPageSuccessfully(facultyApi.facultys)
     return response.data
   }
 

@@ -19,7 +19,7 @@ export default class adminApi {
 
   static async find (params) {
     console.log('adminApi find params', params)
-    const response = await mockApi.queryPageSuccessfully(4, adminApi.admins)
+    const response = await mockApi.queryPageSuccessfully(adminApi.admins)
     return response.data
   }
 

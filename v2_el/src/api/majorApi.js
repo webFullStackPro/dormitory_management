@@ -18,7 +18,7 @@ export default class majorApi {
 
   static async find (params) {
     console.log('majorApi find params', params)
-    const response = await mockApi.queryPageSuccessfully(4, majorApi.majors)
+    const response = await mockApi.queryPageSuccessfully(majorApi.majors)
     return response.data
   }
 

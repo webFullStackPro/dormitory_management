@@ -59,20 +59,12 @@
       </el-row>
       <el-row>
         <el-col :span="11">
-          <el-form-item label="省" prop="province">
-            <el-input v-model="studentForm.province" placeholder="请输入省" maxlength="64"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="11">
-          <el-form-item label="市" prop="city">
-            <el-input v-model="studentForm.city" placeholder="请输入市" maxlength="64"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="11">
-          <el-form-item label="区" prop="area">
-            <el-input v-model="studentForm.area" placeholder="请输入区" maxlength="64"></el-input>
+          <el-form-item label="省/市/区">
+            <el-cascader
+                v-model="provinceCityArea"
+                :options="provinceCityAreaOptions"
+                :props="{ expandTrigger: 'hover', value: 'code', label: 'name' }"
+                @change="handleChange"></el-cascader>
           </el-form-item>
         </el-col>
         <el-col :span="11">
@@ -120,6 +112,7 @@
 <script>
 import studentApi from '@/api/studentApi'
 import MajorSelector from "@/views/major/MajorSelector.vue";
+import areas from "@/locales/area.json";
 export default {
   name: 'StudentAdd',
   components: {MajorSelector,},
@@ -172,6 +165,8 @@ export default {
         ],
       },
       majorSelectorVisible: false,
+      provinceCityArea: [],
+      provinceCityAreaOptions: areas.provinces
     }
   },
   created () {
@@ -180,6 +175,16 @@ export default {
         .then(resp => {
           if (resp && resp.code === 1) {
             this.studentForm = resp.data
+            this.provinceCityArea = []
+            if (this.studentForm.province) {
+              this.provinceCityArea.push(this.studentForm.province)
+            }
+            if (this.studentForm.city) {
+              this.provinceCityArea.push(this.studentForm.city)
+            }
+            if (this.studentForm.area) {
+              this.provinceCityArea.push(this.studentForm.area)
+            }
           } else {
             this.$message.error('获取数据失败')
           }
@@ -208,6 +213,7 @@ export default {
         enrollmentDate: '',
         graduationDate: ''
       }
+      this.provinceCityArea = []
       this.$emit('reset-student-add-event')
     },
     onSave () {
@@ -239,6 +245,17 @@ export default {
       if (selectedMajor && 'majorId' in selectedMajor && this.studentForm.majorId !== selectedMajor['majorId']) {
         this.studentForm.majorId = selectedMajor['majorId']
         this.studentForm.majorName = selectedMajor['majorName']
+      }
+    },
+    handleChange(value) {
+      if (value && value.length) {
+        this.studentForm.province = value[0]
+      }
+      if (value && value.length > 1) {
+        this.studentForm.city = value[1]
+      }
+      if (value && value.length > 2) {
+        this.studentForm.area = value[2]
       }
     },
     onBack () {

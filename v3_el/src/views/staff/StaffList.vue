@@ -36,9 +36,9 @@
       <el-table-column prop="specialty" label="特长"></el-table-column>
       <el-table-column fixed="right" label="操作" width="250">
         <template v-slot="{ row }">
-          <el-button @click.native.prevent="editRow(row.id)" type="primary">编辑</el-button>
-          <el-button @click.native.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
-          <el-button @click.native.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
+          <el-button @click.prevent="editRow(row.id)" type="primary">编辑</el-button>
+          <el-button @click.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
+          <el-button @click.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -76,7 +76,7 @@ import StaffAdd from "@/views/staff/StaffAdd.vue"
 import StaffView from "@/views/staff/StaffView.vue"
 
 const staffQueryFormRef = ref<FormInstance | null>(null);
-let staffQueryForm = reactive<StaffQueryForm>({
+const staffQueryForm = reactive<StaffQueryForm>({
   name: '',
   phone: '',
   position: '',

@@ -1,4 +1,7 @@
 // listQueryMixin.js
+import * as ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
+
 export default {
   data () {
     return {
@@ -16,7 +19,8 @@ export default {
         pageIndex: 1,
         pageSizes: [10, 20, 50],
         pageSize: 10
-      }
+      },
+      dialogWidth: '70%'
     }
   },
   mounted () {
@@ -54,7 +58,6 @@ export default {
       let resp
       try {
         resp = await this.getPageData(params)
-
       } catch (e) {
         console.error(e)
       }
@@ -66,6 +69,36 @@ export default {
         this.pageData.list = []
         this.pageData.count = 0
       }
+    },
+    getGenderText (gender) {
+      return gender === 1 ? '男' : '女'
+    },
+    exportToExcel(headers, data) {
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Sheet1');
+
+      // 添加表头
+      worksheet.addRow(headers);
+
+      data.forEach(rowData => {
+        worksheet.addRow(rowData);
+      });
+
+      // 设置列宽
+      // worksheet.columns = [
+      //   { width: 5 },
+      //   { width: 15 },
+      //   { width: 5 },
+      //   { width: 15 },
+      // ];
+
+      // 将工作簿写入Buffer并转换为Blob对象，然后调用saveAs方法以触发浏览器下载
+      workbook.xlsx.writeBuffer().then((buffer) => {
+        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        saveAs(blob, 'example.xlsx');
+      }).catch((error) => {
+        console.error('Error generating Excel file:', error);
+      });
     }
   }
 }

@@ -23,14 +23,14 @@ export default class dormitoryAllocationApi {
 
   static async find (dormitoryAllocationQueryForm: DormitoryAllocationQueryForm): Promise<Result<Page<DormitoryAllocation>>> {
     console.log('dormitoryAllocationApi find params', dormitoryAllocationQueryForm)
-    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(4, dormitoryAllocationApi.dormitoryAllocations)
+    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(dormitoryAllocationApi.dormitoryAllocations)
     return response.data
   }
 
   static async findById (id: number): Promise<Result<DormitoryAllocation>> {
     console.log('dormitoryAllocationApi findById id', id)
     let target = {}
-    for (let a of dormitoryAllocationApi.dormitoryAllocations) {
+    for (const a of dormitoryAllocationApi.dormitoryAllocations) {
       if (a.id === id) {
         target = a
       }

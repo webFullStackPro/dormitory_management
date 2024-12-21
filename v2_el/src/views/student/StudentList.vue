@@ -31,6 +31,7 @@
         <el-button type="primary" @click="onSearch">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onAdd">新增</el-button>
+        <el-button type="primary" @click="onExport">导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -49,17 +50,17 @@
           <div v-if="row.gender === 2">女</div>
         </template>
       </el-table-column>
-      <el-table-column prop="birthDate" label="出生日期"></el-table-column>
-      <el-table-column prop="majorName" label="专业名称"></el-table-column>
+      <el-table-column prop="birthDate" label="出生日期" width="100"></el-table-column>
+      <el-table-column prop="majorName" label="专业名称" width="130"></el-table-column>
       <el-table-column prop="grade" label="年级"></el-table-column>
-      <el-table-column prop="contactPhone" label="联系电话"></el-table-column>
-      <el-table-column prop="email" label="邮箱"></el-table-column>
-      <el-table-column prop="province" label="省"></el-table-column>
-      <el-table-column prop="city" label="市"></el-table-column>
-      <el-table-column prop="area" label="区"></el-table-column>
-      <el-table-column prop="address" label="家庭地址"></el-table-column>
-      <el-table-column prop="enrollmentDate" label="入学日期"></el-table-column>
-      <el-table-column prop="graduationDate" label="毕业日期"></el-table-column>
+      <el-table-column prop="contactPhone" label="联系电话" width="100"></el-table-column>
+      <el-table-column prop="email" label="邮箱" width="200"></el-table-column>
+      <el-table-column prop="provinceName" label="省" width="70"></el-table-column>
+      <el-table-column prop="cityName" label="市" width="70"></el-table-column>
+      <el-table-column prop="areaName" label="区" width="70"></el-table-column>
+      <el-table-column prop="address" label="家庭地址" width="150"></el-table-column>
+      <el-table-column prop="enrollmentDate" label="入学日期" width="100"></el-table-column>
+      <el-table-column prop="graduationDate" label="毕业日期" width="100"></el-table-column>
       <el-table-column fixed="right" label="操作" width="250">
         <template v-slot="{ row }">
           <el-button @click.native.prevent="editRow(row.id)" type="primary">编辑</el-button>
@@ -100,6 +101,7 @@ import MajorSelector from "@/views/major/MajorSelector.vue";
 import StudentAdd from "@/views/student/StudentAdd.vue"
 import StudentView from "@/views/student/StudentView.vue"
 import listQueryMixin from '@/mixins/listQueryMixin'
+import {getGenderText} from "@/utils/dictTranslator";
 export default {
   name: 'StudentList',
   components: {MajorSelector,StudentAdd, StudentView},
@@ -146,6 +148,22 @@ export default {
       this.selectedStudentId = ''
       this.studentAddVisible = true
       this.studentAddTitle = '学生信息新增'
+    },
+    onExport () {
+      const headers = ['学号', '姓名', '性别', '出生日期', '专业名称', '年级', '联系电话', '邮箱', '省', '市', '区', '家庭地址', '入学日期', '毕业日期']
+      const params = Object.assign(this.getPaginationParams(), this.searchParams)
+      this.getPageData(params).then(data => {
+        if (!data || !data.data || data.data.list.length < 1) {
+          this.$message.error('无数据导出')
+          return
+        }
+        const exportData = []
+        for (const d of data.data.list) {
+          exportData.push([d.studentNumber, d.name, getGenderText(d.gender), d.birthDate, d.majorName, d.grade, d.contactPhone, d.email,
+            d.provinceName, d.cityName, d.areaName, d.address, d.enrollmentDate, d.graduationDate])
+        }
+        this.exportToExcel(headers, exportData)
+      })
     },
     editRow (id) {
       this.selectedStudentId = id

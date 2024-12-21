@@ -49,7 +49,7 @@ import type {Id} from "@/types/id";
 
 const props = defineProps<Id>()
 const adminFormRef = ref<FormInstance | null>(null);
-let adminForm = reactive<AdminForm>({
+const adminForm = reactive<AdminForm>({
   username: '',
   password: '',
   name: '',

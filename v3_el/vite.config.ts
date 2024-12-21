@@ -3,6 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import vueDevTools from 'vite-plugin-vue-devtools'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -18,6 +19,7 @@ export default defineConfig((mode) => {
     plugins: [
       vue(),
       vueJsx(),
+      vueDevTools(),
       AutoImport({
         resolvers: [
           ElementPlusResolver(),
@@ -42,19 +44,14 @@ export default defineConfig((mode) => {
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))
-      }
+      },
     },
     css: {
       preprocessorOptions: {
         scss: {
           // additionalData: ` @import "./src/assets/index.scss"; `
-          additionalData: ` @use "./src/assets/color.scss" as *; `
+          additionalData: ` @use "@/assets/color.scss" as *; `
         }
-      }
-    },
-    server: {
-      fs: {
-        allow: ['D:/nodews/v3_el/node_modules', 'D:/nodews/v3_el/dormitory_management']
       }
     }
   }

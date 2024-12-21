@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
 import './theme/index.css'
+import VueI18n from 'vue-i18n'
+import en from './locales/en.json'
+import zh from './locales/zh.json'
 
 import '@/assets/styles/bootstrap.scss'
 
@@ -18,7 +21,19 @@ Vue.mixin({
   }
 });
 
+Vue.use(VueI18n);
+const i18n = new VueI18n({
+  locale: 'zh', // set locale
+  messages: {
+    en,
+    zh,
+  },
+});
+
 new Vue({
   router,
+  i18n,
   render: h => h(App),
 }).$mount('#app')
+
+document.title = i18n.t('title')

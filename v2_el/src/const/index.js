@@ -1,1 +1,6 @@
-export const baseUrl = process.env.VUE_APP_API_URL
+const ADMIN_USERNAME = "admin"
+const PASSWORD = "123456"
+export {
+  ADMIN_USERNAME,
+  PASSWORD
+}

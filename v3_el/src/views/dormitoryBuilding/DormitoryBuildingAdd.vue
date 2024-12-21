@@ -80,7 +80,7 @@ import StaffSelector from "@/views/staff/StaffSelector.vue";
 
 const props = defineProps<Id>()
 const dormitoryBuildingFormRef = ref<FormInstance | null>(null);
-let dormitoryBuildingForm = reactive<DormitoryBuildingForm>({
+const dormitoryBuildingForm = reactive<DormitoryBuildingForm>({
   name: '',
   constructionYear: 0,
   floorNumber: 0,

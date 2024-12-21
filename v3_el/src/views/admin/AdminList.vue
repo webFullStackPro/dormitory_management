@@ -32,9 +32,9 @@
       <el-table-column prop="name" label="姓名"></el-table-column>
       <el-table-column fixed="right" label="操作" width="250">
         <template v-slot="{ row }">
-          <el-button @click.native.prevent="editRow(row.id)" type="primary">编辑</el-button>
-          <el-button @click.native.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
-          <el-button @click.native.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
+          <el-button @click.prevent="editRow(row.id)" type="primary">编辑</el-button>
+          <el-button @click.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
+          <el-button @click.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -72,7 +72,7 @@ import AdminAdd from "@/views/admin/AdminAdd.vue"
 import AdminView from "@/views/admin/AdminView.vue"
 
 const adminQueryFormRef = ref<FormInstance | null>(null);
-let adminQueryForm = reactive<AdminQueryForm>({
+const adminQueryForm = reactive<AdminQueryForm>({
   username: '',
   name: '',
 })

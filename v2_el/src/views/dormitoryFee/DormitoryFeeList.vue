@@ -29,6 +29,7 @@
         <el-button type="primary" @click="onSearch">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onAdd">新增</el-button>
+        <el-button type="primary" @click="onExport">导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -103,6 +104,7 @@ import StudentSelector from "@/views/student/StudentSelector.vue";
 import DormitoryFeeAdd from "@/views/dormitoryFee/DormitoryFeeAdd.vue"
 import DormitoryFeeView from "@/views/dormitoryFee/DormitoryFeeView.vue"
 import listQueryMixin from '@/mixins/listQueryMixin'
+import {getFeePeriodTypeText, getFeeTypeText} from "@/utils/dictTranslator";
 export default {
   name: 'DormitoryFeeList',
   components: {DormitoryRoomSelector,StudentSelector,DormitoryFeeAdd, DormitoryFeeView},
@@ -148,6 +150,21 @@ export default {
       this.selectedDormitoryFeeId = ''
       this.dormitoryFeeAddVisible = true
       this.dormitoryFeeAddTitle = '费用信息新增'
+    },
+    onExport () {
+      const headers = ['房间号', '学生姓名', '费用类型', '收费周期类型', '收费周期', '费用金额']
+      const params = Object.assign(this.getPaginationParams(), this.searchParams)
+      this.getPageData(params).then(data => {
+        if (!data || !data.data || data.data.list.length < 1) {
+          this.$message.error('无数据导出')
+          return
+        }
+        const exportData = []
+        for (const d of data.data.list) {
+          exportData.push([d.roomNumber, d.studentName, getFeeTypeText(d.feeType), getFeePeriodTypeText(d.feePeriodType), d.feePeriod, d.feeAmount])
+        }
+        this.exportToExcel(headers, exportData)
+      })
     },
     editRow (id) {
       this.selectedDormitoryFeeId = id

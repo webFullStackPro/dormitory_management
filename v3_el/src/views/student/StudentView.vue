@@ -55,20 +55,11 @@
       </el-row>
       <el-row>
         <el-col :span="11">
-          <el-form-item label="省">
-            <el-input v-model="studentForm.province"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="11">
-          <el-form-item label="市">
-            <el-input v-model="studentForm.city"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="11">
-          <el-form-item label="区">
-            <el-input v-model="studentForm.area"></el-input>
+          <el-form-item label="省/市/区">
+            <el-cascader
+              v-model="provinceCityArea"
+              :options="provinceCityAreaOptions"
+              :props="{ expandTrigger: 'hover', value: 'code', label: 'name' }"/>
           </el-form-item>
         </el-col>
         <el-col :span="11">
@@ -120,6 +111,7 @@ import {defineEmits, defineProps, onMounted, reactive, ref, inject, toRefs} from
 import studentApi from '@/api/studentApi'
 import type {Student} from "@/types/resp/student";
 import type {Id} from "@/types/id"
+import areas from '@/locales/area.json'
 
 const studentForm = reactive<Partial<Student>>({});
 const props = defineProps<Id>()
@@ -127,6 +119,8 @@ const emit = defineEmits<{
   (e: 'closeStudentViewEvent'): void;
 }>()
 const formLabelWidth = ref<string>('')
+const provinceCityArea = ref<string[]>([])
+const provinceCityAreaOptions = areas.provinces
 
 onMounted(() => {
   initStudentById(props.id)
@@ -144,6 +138,16 @@ const initStudentById = async (id: number) => {
   const resp = await studentApi.findById(id)
   if (resp && resp.code === 1 && resp.data) {
     Object.assign(studentForm, resp.data)
+    provinceCityArea.value = []
+    if (studentForm.province) {
+      provinceCityArea.value.push(studentForm.province)
+    }
+    if (studentForm.city) {
+      provinceCityArea.value.push(studentForm.city)
+    }
+    if (studentForm.area) {
+      provinceCityArea.value.push(studentForm.area)
+    }
   }
 }
 const onBack = () => {

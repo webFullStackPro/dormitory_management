@@ -55,16 +55,16 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref, inject, toRefs, defineEmits} from 'vue';
+import { defineEmits, inject, onMounted, reactive, ref, toRefs } from 'vue'
 import staffApi from '@/api/staffApi'
-import type {StaffQueryForm} from "@/types/req/staffQueryForm";
-import type {Staff} from "@/types/resp/staff";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
-import type {Result} from "@/types/result";
-import type {Page} from "@/types/page";
+import type { StaffQueryForm } from '@/types/req/staffQueryForm'
+import type { Staff } from '@/types/resp/staff'
+import { type FormInstance } from 'element-plus'
+import type { Result } from '@/types/result'
+import type { Page } from '@/types/page'
 
 const staffQueryFormRef = ref<FormInstance | null>(null);
-let staffQueryForm = reactive<StaffQueryForm>({
+const staffQueryForm = reactive<StaffQueryForm>({
   name: '',
   phone: '',
   position: '',
@@ -88,8 +88,6 @@ const rules = reactive({
 const emit = defineEmits<{
   (e: 'staffSelectedEvent', data?: {
     staffId: number,
-    staffId: number,
-    staffName: string,
     staffName: string,
     staffPhone: string,
     }): void;
@@ -149,8 +147,6 @@ const onReset = () => {
 const staffSelected = (row: Staff) => {
   emit('staffSelectedEvent', {
     staffId: row.id,
-    staffId: row.id,
-    staffName: row.name,
     staffName: row.name,
     staffPhone: row.phone,
   })

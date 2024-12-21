@@ -87,18 +87,18 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref, inject, toRefs, defineEmits} from 'vue';
+import { defineEmits, inject, onMounted, reactive, ref, toRefs } from 'vue'
 import studentApi from '@/api/studentApi'
-import type {StudentQueryForm} from "@/types/req/studentQueryForm";
-import type {Student} from "@/types/resp/student";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
-import type {Result} from "@/types/result";
-import type {Page} from "@/types/page";
-import { Search } from '@element-plus/icons-vue';
-import MajorSelector from "@/views/major/MajorSelector.vue";
+import type { StudentQueryForm } from '@/types/req/studentQueryForm'
+import type { Student } from '@/types/resp/student'
+import { type FormInstance } from 'element-plus'
+import type { Result } from '@/types/result'
+import type { Page } from '@/types/page'
+import { Search } from '@element-plus/icons-vue'
+import MajorSelector from '@/views/major/MajorSelector.vue'
 
 const studentQueryFormRef = ref<FormInstance | null>(null);
-let studentQueryForm = reactive<StudentQueryForm>({
+const studentQueryForm = reactive<StudentQueryForm>({
   studentNumber: '',
   name: '',
   gender: undefined,

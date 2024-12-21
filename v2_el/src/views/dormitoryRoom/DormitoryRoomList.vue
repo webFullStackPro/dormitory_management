@@ -29,6 +29,7 @@
         <el-button type="primary" @click="onSearch">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onAdd">新增</el-button>
+        <el-button type="primary" @click="onExport">导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -107,6 +108,8 @@ import DormitoryBuildingSelector from "@/views/dormitoryBuilding/DormitoryBuildi
 import DormitoryRoomAdd from "@/views/dormitoryRoom/DormitoryRoomAdd.vue"
 import DormitoryRoomView from "@/views/dormitoryRoom/DormitoryRoomView.vue"
 import listQueryMixin from '@/mixins/listQueryMixin'
+import {getRoomTypeText, getYesOrNoText} from "@/utils/dictTranslator";
+
 export default {
   name: 'DormitoryRoomList',
   components: {DormitoryBuildingSelector,DormitoryRoomAdd, DormitoryRoomView},
@@ -151,6 +154,22 @@ export default {
       this.selectedDormitoryRoomId = ''
       this.dormitoryRoomAddVisible = true
       this.dormitoryRoomAddTitle = '宿舍房间信息新增'
+    },
+    onExport () {
+      const headers = ['楼栋名称', '房间号', '所在楼层', '房间类型', '是否有独立卫生间', '是否有空调', '是否有无线网络']
+      const params = Object.assign(this.getPaginationParams(), this.searchParams)
+      this.getPageData(params).then(data => {
+        if (!data || !data.data || data.data.list.length < 1) {
+          this.$message.error('无数据导出')
+          return
+        }
+        const exportData = []
+        for (const d of data.data.list) {
+          exportData.push([d.buildingName, d.roomNumber, d.floorNumber, getRoomTypeText(d.roomType),
+            getYesOrNoText(d.hasBathroom), getYesOrNoText(d.hasAirConditioning), getYesOrNoText(d.hasWifi)])
+        }
+        this.exportToExcel(headers, exportData)
+      })
     },
     editRow (id) {
       this.selectedDormitoryRoomId = id

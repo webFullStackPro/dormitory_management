@@ -24,14 +24,14 @@ export default class majorApi {
 
   static async find (majorQueryForm: MajorQueryForm): Promise<Result<Page<Major>>> {
     console.log('majorApi find params', majorQueryForm)
-    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(4, majorApi.majors)
+    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(majorApi.majors)
     return response.data
   }
 
   static async findById (id: number): Promise<Result<Major>> {
     console.log('majorApi findById id', id)
     let target = {}
-    for (let a of majorApi.majors) {
+    for (const a of majorApi.majors) {
       if (a.id === id) {
         target = a
       }

@@ -96,7 +96,7 @@ import DormitoryBuildingSelector from "@/views/dormitoryBuilding/DormitoryBuildi
 
 const props = defineProps<Id>()
 const dormitoryRoomFormRef = ref<FormInstance | null>(null);
-let dormitoryRoomForm = reactive<DormitoryRoomForm>({
+const dormitoryRoomForm = reactive<DormitoryRoomForm>({
   buildingId: 0,
   buildingName: '',
   roomNumber: '',

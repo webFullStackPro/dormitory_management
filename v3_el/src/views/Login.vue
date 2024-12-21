@@ -8,12 +8,13 @@ import type {FormInstance} from 'element-plus';
 import {ElMessage} from 'element-plus'
 import type {LoginSession} from "@/types/resp/loginSession";
 import type {Result} from '@/types/result'
+import { ADMIN_USERNAME, PASSWORD } from '@/const'
 
 const loading = ref<boolean>(false)
 const loginFormRef = ref<FormInstance | null>(null);
 const loginForm = reactive<LoginForm>({
-  username: 'admin',
-  password: '123456',
+  username: ADMIN_USERNAME,
+  password: PASSWORD,
   verificationCode: ''
 })
 
@@ -29,6 +30,13 @@ const rules = reactive({
   ]
 });
 
+const refreshCaptcha = () => {
+  loginForm.verificationCode = ''
+  loginForm.username = ADMIN_USERNAME
+  loginForm.password = PASSWORD
+  drawCaptcha()
+}
+
 const { generatedVerificationCode, drawCaptcha } = useCaptcha()
 const router = useRouter()
 const onLogin = async () => {
@@ -36,8 +44,7 @@ const onLogin = async () => {
   try {
     if (generatedVerificationCode.value.toLowerCase() !== loginForm.verificationCode.toLowerCase()) {
       ElMessage.error('验证码错误')
-      generatedVerificationCode.value = ''
-      drawCaptcha()
+      refreshCaptcha()
       return
     }
     if (!loginFormRef.value) {
@@ -47,8 +54,9 @@ const onLogin = async () => {
     loginFormRef.value.validate(async (valid: boolean) => {
       if (valid) {
         const resp: Result<LoginSession> = await userApi.login(loginForm)
-        if (!resp || resp.code !== 1 && resp.data) {
-          ElMessage.error(resp && resp.msg ? resp.msg : '操作异常')
+        if (!resp || resp.code !== 1) {
+          ElMessage.error(resp && resp.msg ? resp.msg : '登录失败，用户名或密码不正确')
+          refreshCaptcha()
           return
         }
         const loginSession: LoginSession | undefined = resp.data
@@ -67,7 +75,7 @@ const onLogin = async () => {
               sessionStorage.removeItem('lastPath')
               router.replace({path: lastPath})
             } else {
-              router.replace({path: "/"})
+              router.replace({path: "/Home"})
             }
           }
         })
@@ -87,9 +95,9 @@ const onLogin = async () => {
 <template>
   <div class="login-page">
     <div class="login">
-      <el-form :model="loginForm" :rules="rules" ref="loginFormRef" @keyup.enter.native="onLogin">
+      <el-form :model="loginForm" :rules="rules" ref="loginFormRef" @keyup.enter="onLogin">
         <el-row>
-          <el-col :span="24"><div class="login__title">XX宿舍管理系统</div></el-col>
+          <el-col :span="24"><div class="login__title">{{ $t('title') }}</div></el-col>
         </el-row>
         <el-row>
           <el-col :span="24">

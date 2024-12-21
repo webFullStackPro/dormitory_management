@@ -1,41 +1,39 @@
 import Vue from 'vue'
 import {
-    Aside,
-    Breadcrumb,
-    BreadcrumbItem,
-    Button,
-    Card,
-    Checkbox,
-    Col,
-    Container,
-    DatePicker,
-    Dialog,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    Footer,
-    Form,
-    FormItem,
-    Header,
-    Input,
-    InputNumber,
-    Main,
-    Menu,
-    MenuItem,
-    Option,
-    Pagination,
-    RadioGroup,
-    Radio,
-    Row,
-    Select,
-    Table,
-    TableColumn,
-    Tabs,
-    TabPane,
-    Upload,
-    Loading,
-    MessageBox,
-    Message
+  Aside,
+  Breadcrumb,
+  BreadcrumbItem,
+  Button,
+  Card,
+  Cascader,
+  Col,
+  Container,
+  DatePicker,
+  Dialog,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  Footer,
+  Form,
+  FormItem,
+  Header,
+  Input,
+  InputNumber,
+  Main,
+  Menu,
+  MenuItem,
+  Option,
+  Pagination,
+  RadioGroup,
+  Radio,
+  Row,
+  Select,
+  Table,
+  TableColumn,
+  Upload,
+  Loading,
+  MessageBox,
+  Message,
 } from 'element-ui'
 
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 }
@@ -45,7 +43,7 @@ Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
 Vue.use(Button)
 Vue.use(Card)
-Vue.use(Checkbox)
+Vue.use(Cascader)
 Vue.use(Col)
 Vue.use(Container)
 Vue.use(DatePicker)
@@ -71,8 +69,6 @@ Vue.use(Row)
 Vue.use(Select)
 Vue.use(Table)
 Vue.use(TableColumn)
-Vue.use(Tabs)
-Vue.use(TabPane)
 Vue.use(Upload)
 
 Vue.prototype.$loading = Loading.service;

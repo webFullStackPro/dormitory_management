@@ -28,10 +28,10 @@ export default class MockApi {
     return Promise.resolve(response)
   }
 
-  static operateUnsuccessfully (): Promise<Response<object>> {
+  static operateUnsuccessfully (msg: string): Promise<Response<object>> {
     const result: Result<object> = {
       code: 0,
-      msg: '操作失败'
+      msg: msg ? msg : '操作失败'
     };
     const response: Response<object> = {
       status: 200,
@@ -40,9 +40,9 @@ export default class MockApi {
     return Promise.resolve(response)
   }
 
-  static queryPageSuccessfully (total: number, data: Array<object>): Promise<Response<Page<object>>> {
+  static queryPageSuccessfully (data: Array<object>): Promise<Response<Page<object>>> {
     const page: Page<object> = {
-      total: total,
+      total: (data && data.length ? data.length: 0),
       list: Object.assign([], data)
     }
     const result: Result<Page<object>> = {

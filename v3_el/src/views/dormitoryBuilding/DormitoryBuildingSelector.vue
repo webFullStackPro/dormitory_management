@@ -68,16 +68,15 @@ import {onMounted, reactive, ref, inject, toRefs, defineEmits} from 'vue';
 import dormitoryBuildingApi from '@/api/dormitoryBuildingApi'
 import type {DormitoryBuildingQueryForm} from "@/types/req/dormitoryBuildingQueryForm";
 import type {DormitoryBuilding} from "@/types/resp/dormitoryBuilding";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
+import {type FormInstance} from "element-plus";
 import type {Result} from "@/types/result";
 import type {Page} from "@/types/page";
 
 const dormitoryBuildingQueryFormRef = ref<FormInstance | null>(null);
-let dormitoryBuildingQueryForm = reactive<DormitoryBuildingQueryForm>({
+const dormitoryBuildingQueryForm = reactive<DormitoryBuildingQueryForm>({
   name: '',
   buildingType: undefined,
 })
-const staffSelectorVisible = ref<boolean>(false)
 
 const state = reactive({
   loading: false,

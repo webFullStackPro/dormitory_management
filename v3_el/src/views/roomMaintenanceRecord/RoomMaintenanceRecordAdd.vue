@@ -93,7 +93,7 @@ import StaffSelector from "@/views/staff/StaffSelector.vue";
 
 const props = defineProps<Id>()
 const roomMaintenanceRecordFormRef = ref<FormInstance | null>(null);
-let roomMaintenanceRecordForm = reactive<RoomMaintenanceRecordForm>({
+const roomMaintenanceRecordForm = reactive<RoomMaintenanceRecordForm>({
   roomId: 0,
   roomNumber: '',
   staffId: 0,

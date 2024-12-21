@@ -29,6 +29,7 @@ export default {
       defaultOpeneds: [],
       type: 0,
       menuItems: [
+        { index: '/Home', icon: 'el-icon-s-home', title: '主页' },
         { index: '/AdminList', icon: 'el-icon-user-solid', title: '管理员' },
         { index: '/FacultyList', icon: 'el-icon-s-grid', title: '院系信息' },
         { index: '/MajorList', icon: 'el-icon-reading', title: '专业信息' },
@@ -39,7 +40,8 @@ export default {
         { index: '/DormitoryFeeList', icon: 'el-icon-tickets', title: '费用信息' },
         { index: '/StaffList', icon: 'el-icon-service', title: '员工信息' },
         { index: '/RoomMaintenanceRecordList', icon: 'el-icon-setting', title: '房间维护信息' },
-        { index: '/DormitoryVisitorList', icon: 'el-icon-s-custom', title: '访客记录' }
+        { index: '/DormitoryVisitorList', icon: 'el-icon-s-custom', title: '访客记录' },
+        { index: '/ChartList', icon: 'el-icon-pie-chart', title: '数据统计' }
       ]
     }
   },

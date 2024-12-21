@@ -17,7 +17,7 @@ export default class dormitoryAllocationApi {
 
   static async find (params) {
     console.log('dormitoryAllocationApi find params', params)
-    const response = await mockApi.queryPageSuccessfully(4, dormitoryAllocationApi.dormitoryAllocations)
+    const response = await mockApi.queryPageSuccessfully(dormitoryAllocationApi.dormitoryAllocations)
     return response.data
   }
 

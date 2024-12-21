@@ -9,9 +9,9 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="updatePass">修改密码</el-dropdown-item>
+          <el-dropdown-item command="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <a class="nav-link" href="javascript:;" @click="onLogout">退出</a>
     </div>
 
     <el-dialog :visible.sync="updatePassFormVisible" title="修改密码" width="400">
@@ -60,23 +60,17 @@ export default {
       updatePassForm: {
         oldPass: '',
         newPass: '',
-        newPass2: '',
-        type: ''
+        newPass2: ''
       },
       loading: false,
       settingsName: '设置'
     }
   },
   mounted () {
-    const type = sessionStorage.getItem('type')
     const username = sessionStorage.getItem('username')
-    if (type && Number(type) === 1) {
-      this.settingsName = '管理员-' + username
+    if (username) {
+      this.settingsName = username
     }
-    if (type && Number(type) === 2) {
-      this.settingsName = '商家-' + username
-    }
-    this.updatePassForm.type = type
   },
   methods: {
     onLogout () {
@@ -98,7 +92,6 @@ export default {
     },
     clearSessionAndBackToLoginPage () {
       sessionStorage.removeItem('backendToken')
-      sessionStorage.removeItem('type')
       sessionStorage.removeItem('uid')
       sessionStorage.removeItem('username')
       this.$router.replace({ path: '/Login' }).catch(error => { console.log('退出异常', error) })
@@ -109,9 +102,11 @@ export default {
         this.updatePassForm = {
           oldPass: '',
           newPass: '',
-          newPass2: '',
-          type: sessionStorage.getItem('type')
+          newPass2: ''
         }
+      }
+      if (command === 'logout') {
+        this.onLogout()
       }
     },
     updatePass () {
@@ -131,13 +126,13 @@ export default {
           }
           this.loading = true
           userApi.updatePass(this.updatePassForm)
-              .then(data => {
-                if (data.data && data.data.code === 1) {
+              .then(resp => {
+                if (resp && resp.code === 1) {
                   this.$message({ message: '修改密码成功', type: 'success' })
                   this.loading = false
                   this.updatePassFormVisible = false
                 } else {
-                  this.$message.error(data.data.msg ? data.data.msg : '修改密码失败')
+                  this.$message.error(resp.msg ? resp.msg : '修改密码失败')
                   this.loading = false
                 }
               })
@@ -194,7 +189,7 @@ export default {
 
   @at-root #{&}__nav {
     float: right;
-    margin-right: 20px;
+    margin-right: 50px;
     .nav-link {
       padding: 7px 10px;
       color: #ffffff;

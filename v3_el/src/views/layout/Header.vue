@@ -10,10 +10,10 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="updatePassCmd">修改密码</el-dropdown-item>
+            <el-dropdown-item command="logoutCmd">退出</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <a class="nav-link" style="line-height: 60px;" href="javascript:;" @click="onLogout">退出</a>
     </div>
   </div>
   <el-dialog  v-model="updatePassFormVisible" v-if="updatePassFormVisible" title="修改密码" width="800">
@@ -76,7 +76,6 @@ onMounted(() => {
   }
 });
 const handleCommand = (command: string) => {
-  console.log('command', command)
   switch (command) {
     case 'updatePassCmd':
       updatePass()
@@ -187,7 +186,7 @@ const clearSessionAndBackToLoginPage = () => {
   @at-root #{&}__nav {
     display: flex;
     justify-content: space-between; /* 水平方向上两端对齐 */
-    margin-right: 20px;
+    margin-right: 50px;
     .nav-link {
       line-height: 60px;
       margin-right: 10px;

@@ -24,14 +24,14 @@ export default class roomMaintenanceRecordApi {
 
   static async find (roomMaintenanceRecordQueryForm: RoomMaintenanceRecordQueryForm): Promise<Result<Page<RoomMaintenanceRecord>>> {
     console.log('roomMaintenanceRecordApi find params', roomMaintenanceRecordQueryForm)
-    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(4, roomMaintenanceRecordApi.roomMaintenanceRecords)
+    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(roomMaintenanceRecordApi.roomMaintenanceRecords)
     return response.data
   }
 
   static async findById (id: number): Promise<Result<RoomMaintenanceRecord>> {
     console.log('roomMaintenanceRecordApi findById id', id)
     let target = {}
-    for (let a of roomMaintenanceRecordApi.roomMaintenanceRecords) {
+    for (const a of roomMaintenanceRecordApi.roomMaintenanceRecords) {
       if (a.id === id) {
         target = a
       }

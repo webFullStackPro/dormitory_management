@@ -33,9 +33,9 @@
       <el-table-column prop="facultyDescription" label="院系简介"></el-table-column>
       <el-table-column fixed="right" label="操作" width="250">
         <template v-slot="{ row }">
-          <el-button @click.native.prevent="editRow(row.id)" type="primary">编辑</el-button>
-          <el-button @click.native.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
-          <el-button @click.native.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
+          <el-button @click.prevent="editRow(row.id)" type="primary">编辑</el-button>
+          <el-button @click.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
+          <el-button @click.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -73,7 +73,7 @@ import FacultyAdd from "@/views/faculty/FacultyAdd.vue"
 import FacultyView from "@/views/faculty/FacultyView.vue"
 
 const facultyQueryFormRef = ref<FormInstance | null>(null);
-let facultyQueryForm = reactive<FacultyQueryForm>({
+const facultyQueryForm = reactive<FacultyQueryForm>({
   name: '',
 })
 

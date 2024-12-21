@@ -75,7 +75,7 @@ import type {Id} from "@/types/id";
 
 const props = defineProps<Id>()
 const facultyFormRef = ref<FormInstance | null>(null);
-let facultyForm = reactive<FacultyForm>({
+const facultyForm = reactive<FacultyForm>({
   name: '',
   establishmentDate: '',
   contactPhone: '',

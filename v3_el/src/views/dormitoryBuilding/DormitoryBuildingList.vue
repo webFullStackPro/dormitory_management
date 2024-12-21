@@ -45,9 +45,9 @@
       <el-table-column prop="buildingLocation" label="位置"></el-table-column>
       <el-table-column fixed="right" label="操作" width="250">
         <template v-slot="{ row }">
-          <el-button @click.native.prevent="editRow(row.id)" type="primary">编辑</el-button>
-          <el-button @click.native.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
-          <el-button @click.native.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
+          <el-button @click.prevent="editRow(row.id)" type="primary">编辑</el-button>
+          <el-button @click.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
+          <el-button @click.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -85,7 +85,7 @@ import DormitoryBuildingAdd from "@/views/dormitoryBuilding/DormitoryBuildingAdd
 import DormitoryBuildingView from "@/views/dormitoryBuilding/DormitoryBuildingView.vue"
 
 const dormitoryBuildingQueryFormRef = ref<FormInstance | null>(null);
-let dormitoryBuildingQueryForm = reactive<DormitoryBuildingQueryForm>({
+const dormitoryBuildingQueryForm = reactive<DormitoryBuildingQueryForm>({
   name: '',
   buildingType: undefined,
 })

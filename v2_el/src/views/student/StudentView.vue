@@ -55,20 +55,11 @@
       </el-row>
       <el-row>
         <el-col :span="11">
-          <el-form-item label="省">
-            <el-input v-model="studentForm.province"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="11">
-          <el-form-item label="市">
-            <el-input v-model="studentForm.city"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="11">
-          <el-form-item label="区">
-            <el-input v-model="studentForm.area"></el-input>
+          <el-form-item label="省/市/区">
+            <el-cascader
+                v-model="provinceCityArea"
+                :options="provinceCityAreaOptions"
+                :props="{ expandTrigger: 'hover', value: 'code', label: 'name' }"></el-cascader>
           </el-form-item>
         </el-col>
         <el-col :span="11">
@@ -117,6 +108,7 @@
 
 <script>
 import studentApi from '@/api/studentApi'
+import areas from "@/locales/area.json";
 export default {
   name: 'StudentView',
   props: ['id'],
@@ -125,7 +117,9 @@ export default {
   data () {
     return {
       studentForm: {
-      }
+      },
+      provinceCityArea: [],
+      provinceCityAreaOptions: areas.provinces
     }
   },
   created () {
@@ -134,6 +128,16 @@ export default {
           .then(resp => {
             if (resp && resp.code === 1) {
               this.studentForm = resp.data
+              this.provinceCityArea = []
+              if (this.studentForm.province) {
+                this.provinceCityArea.push(this.studentForm.province)
+              }
+              if (this.studentForm.city) {
+                this.provinceCityArea.push(this.studentForm.city)
+              }
+              if (this.studentForm.area) {
+                this.provinceCityArea.push(this.studentForm.area)
+              }
             } else {
               this.$message.error('获取数据失败')
             }

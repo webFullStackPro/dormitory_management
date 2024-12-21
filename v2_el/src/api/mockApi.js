@@ -1,6 +1,6 @@
 export default class mockApi {
   static operateSuccessfully () {
-  return Promise.resolve({
+    return Promise.resolve({
       status: 200,
       data: {
         code: 1,
@@ -13,33 +13,33 @@ export default class mockApi {
     return Promise.resolve({
       status: 200,
       data: {
-      code: 1,
-      msg: '操作成功',
-      data: Object.assign({}, data)
+        code: 1,
+        msg: '操作成功',
+        data: Object.assign({}, data)
       }
     })
   }
 
-  static operateUnsuccessfully () {
+  static operateUnsuccessfully (msg) {
     return Promise.resolve({
       status: 200,
       data: {
-      code: 0,
-      msg: '操作失败'
+        code: 0,
+        msg: msg ? msg: '操作失败'
       }
     })
   }
 
-  static queryPageSuccessfully (total, data) {
+  static queryPageSuccessfully (data) {
     return Promise.resolve({
       status: 200,
       data: {
-      code: 1,
-      msg: '操作成功',
-      data: {
-          total: total,
+        code: 1,
+        msg: '操作成功',
+        data: {
+          total: (data && data.length ? data.length: 0),
           list: Object.assign([], data)
-      }
+        }
       }
     })
   }
@@ -48,9 +48,9 @@ export default class mockApi {
     return Promise.resolve({
       status: 200,
       data: {
-      code: 1,
-      msg: '操作成功',
-      data: Object.assign({}, data)
+        code: 1,
+        msg: '操作成功',
+        data: Object.assign({}, data)
       }
     })
   }
