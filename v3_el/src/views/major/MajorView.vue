@@ -48,9 +48,11 @@
             <el-input v-model="majorForm.officeLocation"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="11">
+      </el-row>
+      <el-row>
+        <el-col :span="22">
           <el-form-item label="专业简介">
-            <el-input v-model="majorForm.majorDescription"></el-input>
+            <el-input v-model="majorForm.majorDescription" type="textarea" :rows="5"></el-input>
           </el-form-item>
         </el-col>
       </el-row>

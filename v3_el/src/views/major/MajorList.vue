@@ -49,7 +49,7 @@
       </el-table-column>
       <el-table-column prop="duration" label="学制(年)"></el-table-column>
       <el-table-column prop="contactPhone" label="联系电话"></el-table-column>
-      <el-table-column prop="email" label="邮箱"></el-table-column>
+      <el-table-column prop="email" label="邮箱" width="170"></el-table-column>
       <el-table-column prop="officeLocation" label="办公地点"></el-table-column>
       <el-table-column prop="majorDescription" label="专业简介"></el-table-column>
       <el-table-column fixed="right" label="操作" width="250">

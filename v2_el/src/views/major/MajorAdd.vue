@@ -57,9 +57,9 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="11">
-          <el-form-item label="专业简介" prop="majorDescription">
-            <el-input v-model="majorForm.majorDescription" placeholder="请输入专业简介" maxlength="65535"></el-input>
+        <el-col :span="22">
+          <el-form-item label="院系简介" prop="facultyDescription">
+            <el-input v-model="majorForm.majorDescription" placeholder="请输入院系简介" type="textarea" :rows="5" maxlength="65535"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
