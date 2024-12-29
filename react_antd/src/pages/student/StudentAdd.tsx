@@ -1,9 +1,24 @@
 import React, {useEffect, useState} from "react";
-import {Button, Col, DatePicker, Form, Input, InputNumber, message, Modal, Row, Select} from "antd";
+import {
+  Button,
+  Cascader,
+  CascaderProps,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  message,
+  Modal,
+  Row,
+  Select
+} from "antd";
 import type {Result} from "@/types/result";
 import studentApi from "@/api/studentApi.ts";
 import {Student} from "@/types/resp/student";
 import MajorSelector from "@/pages/major/MajorSelector.tsx";
+import {AreaOption} from "@/types/areaOption.ts";
+import areas from "@/locales/area.json";
 
 interface StudentAddProps {
   visible: boolean;
@@ -47,6 +62,8 @@ const StudentAdd: React.FC<StudentAddProps> = ({visible, id, onCloseStudentAdd})
 
   const [title, setTitle] = useState('新增学生信息');
 
+  const provinceCityAreaOptions: AreaOption[] = areas.provinces
+
   useEffect(() => {
     if (!visible) {
       return
@@ -64,7 +81,17 @@ const StudentAdd: React.FC<StudentAddProps> = ({visible, id, onCloseStudentAdd})
     const resp: Result<Student> = await studentApi.findById(id)
     if (resp && resp.code === 1 && resp.data) {
       studentForm = resp.data
-      form.setFieldsValue(resp.data);
+      const provinceCityArea2 = []
+      if (studentForm.province) {
+        provinceCityArea2.push(studentForm.province)
+      }
+      if (studentForm.city) {
+        provinceCityArea2.push(studentForm.city)
+      }
+      if (studentForm.area) {
+        provinceCityArea2.push(studentForm.area)
+      }
+      form.setFieldsValue({...studentForm, provinceCityArea: provinceCityArea2});
     }
   }
 
@@ -112,6 +139,18 @@ const StudentAdd: React.FC<StudentAddProps> = ({visible, id, onCloseStudentAdd})
 
   const onBack = () => {
     onCloseStudentAdd()
+  };
+
+  const onAreaChange: CascaderProps<AreaOption>['onChange'] = (value) => {
+    if (value && value.length > 0 && typeof value[0] === 'string') {
+      studentForm.province = value[0]
+    }
+    if (value && value.length > 1 && typeof value[1] === 'string') {
+      studentForm.city = value[1]
+    }
+    if (value && value.length > 2 && typeof value[2] === 'string') {
+      studentForm.area = value[2]
+    }
   };
 
   const addFooter = (
@@ -180,20 +219,8 @@ const StudentAdd: React.FC<StudentAddProps> = ({visible, id, onCloseStudentAdd})
         </Row>
         <Row gutter={10}>
           <Col span={11}>
-            <Form.Item name="province" label="省">
-              <Input maxLength={64} placeholder="请输入省"/>
-            </Form.Item>
-          </Col>
-          <Col span={11}>
-            <Form.Item name="city" label="市">
-              <Input maxLength={64} placeholder="请输入市"/>
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={10}>
-          <Col span={11}>
-            <Form.Item name="area" label="区">
-              <Input maxLength={64} placeholder="请输入区"/>
+            <Form.Item name="provinceCityArea" label="省/市/区">
+              <Cascader options={provinceCityAreaOptions} fieldNames={{ label: "name", value: "code" }} onChange={onAreaChange} placeholder="请选择省/市/区" />
             </Form.Item>
           </Col>
           <Col span={11}>

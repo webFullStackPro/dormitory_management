@@ -1,6 +1,8 @@
 import React, {useEffect} from "react";
-import {Button, Col, DatePicker, Form, Input, Modal, Row, Select} from "antd";
+import {Button, Cascader, Col, DatePicker, Form, Input, Modal, Row, Select} from "antd";
 import {Student} from "@/types/resp/student";
+import {AreaOption} from "@/types/areaOption.ts";
+import areas from "@/locales/area.json";
 
 interface StudentViewProps {
   visible: boolean;
@@ -12,6 +14,8 @@ const StudentView: React.FC<StudentViewProps> = ({visible, viewRow, onCloseStude
 
   const [form] = Form.useForm<Student>();
 
+  const provinceCityAreaOptions: AreaOption[] = areas.provinces
+
   const onBack = () => {
     onCloseStudentView()
   };
@@ -21,7 +25,17 @@ const StudentView: React.FC<StudentViewProps> = ({visible, viewRow, onCloseStude
       return
     }
     if (viewRow) {
-      form.setFieldsValue(viewRow);
+      const provinceCityArea2 = []
+      if ('province' in viewRow && typeof viewRow.province === 'string') {
+        provinceCityArea2.push(viewRow.province)
+      }
+      if ('city' in viewRow && typeof viewRow.city === 'string') {
+        provinceCityArea2.push(viewRow.city)
+      }
+      if ('area' in viewRow && typeof viewRow.area === 'string') {
+        provinceCityArea2.push(viewRow.area)
+      }
+      form.setFieldsValue({...viewRow, provinceCityArea: provinceCityArea2});
     }
   }, [viewRow]);
 
@@ -88,20 +102,8 @@ const StudentView: React.FC<StudentViewProps> = ({visible, viewRow, onCloseStude
         </Row>
         <Row gutter={10}>
           <Col span={11}>
-            <Form.Item name="province" label="省">
-              <Input/>
-            </Form.Item>
-          </Col>
-          <Col span={11}>
-            <Form.Item name="city" label="市">
-              <Input/>
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={10}>
-          <Col span={11}>
-            <Form.Item name="area" label="区">
-              <Input/>
+            <Form.Item name="provinceCityArea" label="省/市/区">
+              <Cascader options={provinceCityAreaOptions} fieldNames={{ label: "name", value: "code" }} />
             </Form.Item>
           </Col>
           <Col span={11}>
