@@ -45,7 +45,7 @@
 
 6.angular+ngzorro实现
 
-6.1.命令行进入react_antd目录
+6.1.命令行进入angular_ngzorro目录
  
 6.2.执行  _npm install_  安装依赖
 
