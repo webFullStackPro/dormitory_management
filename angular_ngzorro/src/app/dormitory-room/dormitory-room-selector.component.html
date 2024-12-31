@@ -1,0 +1,85 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="modalWidth" (nzOnCancel)="onBack()">
+  <div *nzModalTitle>{{ title }}</div>
+  <ng-container *nzModalContent>
+    <form nz-form class="search-form" [formGroup]="searchForm" (keydown.enter)="$event.preventDefault();onSearch()" nzLayout="inline">
+            <nz-form-item>
+        <nz-form-label nzFor="buildingName">楼栋名称</nz-form-label>
+        <nz-form-control>
+          <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input nz-input formControlName="buildingName" placeholder="请选择楼栋名称" readonly />
+          </nz-input-group>
+          <ng-template #suffixIconButton>
+            <button nz-button nzType="primary" nzSearch (click)="findDormitoryBuilding()"><nz-icon nzType="search" /></button>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+<nz-form-item>
+        <nz-form-label nzFor="roomNumber">房间号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="roomNumber" placeholder="请输入房间号" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="floorNumber">所在楼层</nz-form-label>
+        <nz-form-control>
+        <nz-input-number formControlName="floorNumber" nzMin="1" nzMax="128" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="roomType">房间类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="roomType" class="custom-select-width">
+            <nz-option nzLabel="双人间" [nzValue]="2"></nz-option>
+            <nz-option nzLabel="四人间" [nzValue]="4"></nz-option>
+            <nz-option nzLabel="六人间" [nzValue]="6"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <button nz-button type="button" nzType="primary" [nzLoading]="searchLoading" (click)="onSearch()">查询</button>
+      <button nz-button type="button" class="margin-button" (click)="onReset()">重置</button>
+    </form>
+    <nz-table #basicTable [nzData]="listOfData" [nzTotal]="total" [nzLoading]="searchLoading" nzSize="small">
+      <thead>
+        <tr>
+          <th>楼栋名称</th>
+          <th>房间号</th>
+          <th>所在楼层</th>
+          <th>房间类型</th>
+          <th>是否有独立卫生间</th>
+          <th>是否有空调</th>
+          <th>是否有无线网络</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data" (dblclick)="onRowDblClick(data, $event)">
+          <td>{{data.buildingName}}</td>
+          <td>{{data.roomNumber}}</td>
+          <td>{{data.floorNumber}}</td>
+          <td>
+            <ng-container *ngIf="data.roomType === 2">双人间</ng-container>
+            <ng-container *ngIf="data.roomType === 4">四人间</ng-container>
+            <ng-container *ngIf="data.roomType === 6">六人间</ng-container>
+          </td>
+          <td>
+            <ng-container *ngIf="data.hasBathroom === 0">否</ng-container>
+            <ng-container *ngIf="data.hasBathroom === 1">是</ng-container>
+          </td>
+          <td>
+            <ng-container *ngIf="data.hasAirConditioning === 0">否</ng-container>
+            <ng-container *ngIf="data.hasAirConditioning === 1">是</ng-container>
+          </td>
+          <td>
+            <ng-container *ngIf="data.hasWifi === 0">否</ng-container>
+            <ng-container *ngIf="data.hasWifi === 1">是</ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="form-button-container">
+      <button nz-button nzType="default" (click)="onBack()">关闭</button>
+    </div>
+  </div>
+</nz-modal>
+<dormitory-building-selector (dormitoryBuildingSelectedEvent)="handleDormitoryBuildingSelectedEvent($event)"></dormitory-building-selector>

@@ -1,0 +1,78 @@
+<nz-breadcrumb class="breadcrumb">
+  <nz-breadcrumb-item>
+    <a>首页</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>访客记录列表</nz-breadcrumb-item>
+</nz-breadcrumb>
+<form nz-form class="search-form" [formGroup]="searchForm" (keydown.enter)="$event.preventDefault();onSearch()" nzLayout="inline">
+  <nz-form-item>
+    <nz-form-label nzFor="roomNumber">房间号</nz-form-label>
+    <nz-form-control>
+      <nz-input-group nzSearch [nzAddOnAfter]="roomNumberSuffixIconButton">
+        <input nz-input formControlName="roomNumber" placeholder="请选择房间号" readonly />
+      </nz-input-group>
+      <ng-template #roomNumberSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="findDormitoryRoom()"><nz-icon nzType="search" /></button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="studentName">学生姓名</nz-form-label>
+    <nz-form-control>
+      <nz-input-group nzSearch [nzAddOnAfter]="studentNameSuffixIconButton">
+        <input nz-input formControlName="studentName" placeholder="请选择学生姓名" readonly />
+      </nz-input-group>
+      <ng-template #studentNameSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="findStudent()"><nz-icon nzType="search" /></button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="visitorName">访客姓名</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="visitorName" placeholder="请输入访客姓名" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="contactPhone">访客联系电话</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="contactPhone" placeholder="请输入访客联系电话" />
+    </nz-form-control>
+  </nz-form-item>
+  <button nz-button type="button" nzType="primary" [nzLoading]="searchLoading" (click)="onSearch()">查询</button>
+  <button nz-button type="button" class="margin-button" (click)="onReset()">重置</button>
+  <button nz-button type="button" class="margin-button" nzType="primary" (click)="onAdd()">新增</button>
+  <button nz-button type="button" class="margin-button" nzType="primary" [nzLoading]="searchLoading" (click)="onExport()">导出</button>
+</form>
+<nz-table #basicTable [nzData]="listOfData" [nzTotal]="total" [nzLoading]="searchLoading" nzSize="small">
+  <thead>
+    <tr>
+      <th>房间号</th>
+      <th>学生姓名</th>
+      <th>访客姓名</th>
+      <th>访客联系电话</th>
+      <th>开始时间</th>
+      <th>结束时间</th>
+      <th nzWidth="250px">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{data.roomNumber}}</td>
+      <td>{{data.studentName}}</td>
+      <td>{{data.visitorName}}</td>
+      <td>{{data.contactPhone}}</td>
+      <td>{{data.visitStartTime}}</td>
+      <td>{{data.visitEndTime}}</td>
+      <td>
+        <button nz-button type="button" nzType="primary" (click)="editRow(data.id)">编辑</button>
+        <button nz-button type="button" nzDanger class="margin-button" (click)="delRow(data.id)">删除</button>
+        <button nz-button type="button" class="margin-button" (click)="detailRow(data)">详情</button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<dormitory-room-selector (dormitoryRoomSelectedEvent)="handleDormitoryRoomSelectedEvent($event)"></dormitory-room-selector>
+<student-selector (studentSelectedEvent)="handleStudentSelectedEvent($event)"></student-selector>
+<dormitory-visitor-add (addedEvent)="onAdded($event)"></dormitory-visitor-add>
+<dormitory-visitor-view></dormitory-visitor-view>

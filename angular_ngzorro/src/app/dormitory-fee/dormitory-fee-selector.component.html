@@ -1,0 +1,71 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="modalWidth" (nzOnCancel)="onBack()">
+  <div *nzModalTitle>{{ title }}</div>
+  <ng-container *nzModalContent>
+    <form nz-form class="search-form" [formGroup]="searchForm" (keydown.enter)="$event.preventDefault();onSearch()" nzLayout="inline">
+            <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="roomNumber">房间号</nz-form-label>
+        <nz-form-control>
+          <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input nz-input formControlName="roomNumber" placeholder="请选择房间号" readonly />
+          </nz-input-group>
+          <ng-template #suffixIconButton>
+            <button nz-button nzType="primary" nzSearch (click)="findDormitoryRoom()"><nz-icon nzType="search" /></button>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="studentName">学生姓名</nz-form-label>
+        <nz-form-control>
+          <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input nz-input formControlName="studentName" placeholder="请选择学生姓名" readonly />
+          </nz-input-group>
+          <ng-template #suffixIconButton>
+            <button nz-button nzType="primary" nzSearch (click)="findStudent()"><nz-icon nzType="search" /></button>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="feeType">费用类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="feeType">
+            <nz-option nzLabel="住宿费" [nzValue]="10"></nz-option>
+            <nz-option nzLabel="网费" [nzValue]="20"></nz-option>
+            <nz-option nzLabel="水费" [nzValue]="30"></nz-option>
+            <nz-option nzLabel="电费" [nzValue]="40"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <button nz-button type="button" nzType="primary" [nzLoading]="searchLoading" (click)="onSearch()">查询</button>
+      <button nz-button type="button" class="margin-button" (click)="onReset()">重置</button>
+    </form>
+    <nz-table #basicTable [nzData]="listOfData" [nzTotal]="total" [nzLoading]="searchLoading" nzSize="small">
+      <thead>
+        <tr>
+          <th>房间号</th>
+          <th>学生姓名</th>
+          <th>费用类型</th>
+          <th>收费周期类型</th>
+          <th>收费周期</th>
+          <th>费用金额</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data" (dblclick)="onRowDblClick(data, $event)">
+          <td>{{data.roomNumber}}</td>
+          <td>{{data.studentName}}</td>
+          <td>{{data.feeType}}</td>
+          <td>{{data.feePeriodType}}</td>
+          <td>{{data.feePeriod}}</td>
+          <td>{{data.feeAmount}}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="form-button-container">
+      <button nz-button nzType="default" (click)="onBack()">关闭</button>
+    </div>
+  </div>
+</nz-modal>
+<dormitory-room-selector (dormitoryRoomSelectedEvent)="handleDormitoryRoomSelectedEvent($event)"></dormitory-room-selector>
+<student-selector (studentSelectedEvent)="handleStudentSelectedEvent($event)"></student-selector>

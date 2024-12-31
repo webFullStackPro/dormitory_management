@@ -1,0 +1,115 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="modalWidth" (nzOnCancel)="onBack()">
+  <div *nzModalTitle>{{ title }}</div>
+  <ng-container *nzModalContent>
+    <form [formGroup]="dormitoryRoomForm">
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="buildingName">楼栋名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="buildingName" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="roomNumber">房间号</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="roomNumber" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="floorNumber">所在楼层</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="floorNumber" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="roomType">房间类型</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="roomType">
+                <nz-option nzLabel="双人间" [nzValue]="2"></nz-option>
+                <nz-option nzLabel="四人间" [nzValue]="4"></nz-option>
+                <nz-option nzLabel="六人间" [nzValue]="6"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="availableBeds">可用床位</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="availableBeds" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="hasBathroom">是否有独立卫生间</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="hasBathroom">
+                <nz-option nzLabel="否" [nzValue]="0"></nz-option>
+                <nz-option nzLabel="是" [nzValue]="1"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="hasAirConditioning">是否有空调</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="hasAirConditioning">
+                <nz-option nzLabel="否" [nzValue]="0"></nz-option>
+                <nz-option nzLabel="是" [nzValue]="1"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="hasWifi">是否有无线网络</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="hasWifi">
+                <nz-option nzLabel="否" [nzValue]="0"></nz-option>
+                <nz-option nzLabel="是" [nzValue]="1"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="createTime">创建时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="createTime" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="modifyTime">最后修改时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="modifyTime" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="form-button-container">
+      <button nz-button nzType="default" (click)="onBack()">关闭</button>
+    </div>
+  </div>
+</nz-modal>

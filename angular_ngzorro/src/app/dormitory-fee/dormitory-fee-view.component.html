@@ -1,0 +1,85 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="modalWidth" (nzOnCancel)="onBack()">
+  <div *nzModalTitle>{{ title }}</div>
+  <ng-container *nzModalContent>
+    <form [formGroup]="dormitoryFeeForm">
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="roomNumber">房间号</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="roomNumber" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="studentName">学生姓名</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="studentName" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="feeType">费用类型</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="feeType">
+                <nz-option nzLabel="住宿费" [nzValue]="10"></nz-option>
+                <nz-option nzLabel="网费" [nzValue]="20"></nz-option>
+                <nz-option nzLabel="水费" [nzValue]="30"></nz-option>
+                <nz-option nzLabel="电费" [nzValue]="40"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="feePeriodType">收费周期类型</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="feePeriodType">
+                <nz-option nzLabel="月度" [nzValue]="10"></nz-option>
+                <nz-option nzLabel="年度" [nzValue]="20"></nz-option>
+                <nz-option nzLabel="季度" [nzValue]="30"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="feePeriod">收费周期</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="feePeriod" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="feeAmount">费用金额</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="feeAmount" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="createTime">创建时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="createTime" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="form-button-container">
+      <button nz-button nzType="default" (click)="onBack()">关闭</button>
+    </div>
+  </div>
+</nz-modal>

@@ -1,0 +1,76 @@
+<nz-breadcrumb class="breadcrumb">
+  <nz-breadcrumb-item>
+    <a>首页</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>房间维护信息列表</nz-breadcrumb-item>
+</nz-breadcrumb>
+<form nz-form class="search-form" [formGroup]="searchForm" (keydown.enter)="$event.preventDefault();onSearch()" nzLayout="inline">
+  <nz-form-item>
+    <nz-form-label nzFor="roomNumber">房间号</nz-form-label>
+    <nz-form-control>
+      <nz-input-group nzSearch [nzAddOnAfter]="roomNumberSuffixIconButton">
+        <input nz-input formControlName="roomNumber" placeholder="请选择房间号" readonly />
+      </nz-input-group>
+      <ng-template #roomNumberSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="findDormitoryRoom()"><nz-icon nzType="search" /></button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="staffName">员工姓名</nz-form-label>
+    <nz-form-control>
+      <nz-input-group nzSearch [nzAddOnAfter]="staffNameSuffixIconButton">
+        <input nz-input formControlName="staffName" placeholder="请选择员工姓名" readonly />
+      </nz-input-group>
+      <ng-template #staffNameSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="findStaff()"><nz-icon nzType="search" /></button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="staffPhone">员工联系电话</nz-form-label>
+    <nz-form-control>
+      <nz-input-group nzSearch [nzAddOnAfter]="staffPhoneSuffixIconButton">
+        <input nz-input formControlName="staffPhone" placeholder="请选择员工联系电话" readonly />
+      </nz-input-group>
+      <ng-template #staffPhoneSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="findStaff()"><nz-icon nzType="search" /></button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <button nz-button type="button" nzType="primary" [nzLoading]="searchLoading" (click)="onSearch()">查询</button>
+  <button nz-button type="button" class="margin-button" (click)="onReset()">重置</button>
+  <button nz-button type="button" class="margin-button" nzType="primary" (click)="onAdd()">新增</button>
+</form>
+<nz-table #basicTable [nzData]="listOfData" [nzTotal]="total" [nzLoading]="searchLoading" nzSize="small">
+  <thead>
+    <tr>
+      <th>房间号</th>
+      <th>员工姓名</th>
+      <th>员工联系电话</th>
+      <th>开始时间</th>
+      <th>结束时间</th>
+      <th>维护内容</th>
+      <th nzWidth="250px">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{data.roomNumber}}</td>
+      <td>{{data.staffName}}</td>
+      <td>{{data.staffPhone}}</td>
+      <td>{{data.startTime}}</td>
+      <td>{{data.endTime}}</td>
+      <td class="ellipsis">{{data.content}}</td>
+      <td>
+        <button nz-button type="button" nzType="primary" (click)="editRow(data.id)">编辑</button>
+        <button nz-button type="button" nzDanger class="margin-button" (click)="delRow(data.id)">删除</button>
+        <button nz-button type="button" class="margin-button" (click)="detailRow(data)">详情</button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<dormitory-room-selector (dormitoryRoomSelectedEvent)="handleDormitoryRoomSelectedEvent($event)"></dormitory-room-selector>
+<staff-selector (staffSelectedEvent)="handleStaffSelectedEvent($event)"></staff-selector>
+<room-maintenance-record-add (addedEvent)="onAdded($event)"></room-maintenance-record-add>
+<room-maintenance-record-view></room-maintenance-record-view>

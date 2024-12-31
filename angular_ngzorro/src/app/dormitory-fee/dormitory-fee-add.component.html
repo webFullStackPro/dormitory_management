@@ -1,0 +1,89 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="modalWidth" (nzOnCancel)="onBack()">
+  <div *nzModalTitle>{{ title }}</div>
+  <ng-container *nzModalContent>
+    <form [formGroup]="dormitoryFeeForm" (keydown.enter)="$event.preventDefault()">
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="roomNumber" nzRequired>房间号</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择房间号'">
+              <nz-input-group nzSearch [nzAddOnAfter]="roomNumberSuffixIconButton">
+                <input nz-input formControlName="roomNumber" placeholder="请选择房间号" readonly />
+              </nz-input-group>
+              <ng-template #roomNumberSuffixIconButton>
+                <button nz-button nzType="primary" nzSearch (click)="findDormitoryRoom()"><nz-icon nzType="search" /></button>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="studentName">学生姓名</nz-form-label>
+            <nz-form-control>
+              <nz-input-group nzSearch [nzAddOnAfter]="studentNameSuffixIconButton">
+                <input nz-input formControlName="studentName" placeholder="请选择学生姓名" readonly />
+              </nz-input-group>
+              <ng-template #studentNameSuffixIconButton>
+                <button nz-button nzType="primary" nzSearch (click)="findStudent()"><nz-icon nzType="search" /></button>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="feeType" nzRequired>费用类型</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择费用类型'">
+              <nz-select formControlName="feeType">
+                <nz-option nzLabel="住宿费" [nzValue]="10"></nz-option>
+                <nz-option nzLabel="网费" [nzValue]="20"></nz-option>
+                <nz-option nzLabel="水费" [nzValue]="30"></nz-option>
+                <nz-option nzLabel="电费" [nzValue]="40"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="feePeriodType" nzRequired>收费周期类型</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择收费周期类型'">
+              <nz-select formControlName="feePeriodType">
+                <nz-option nzLabel="月度" [nzValue]="10"></nz-option>
+                <nz-option nzLabel="年度" [nzValue]="20"></nz-option>
+                <nz-option nzLabel="季度" [nzValue]="30"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="feePeriod" nzRequired>收费周期</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请输入收费周期'">
+              <input nz-input formControlName="feePeriod" placeholder="请输入收费周期" maxlength="32"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="feeAmount" nzRequired>费用金额</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择费用金额'">
+            <nz-input-number formControlName="feeAmount" [nzMin]="1" [nzMax]="99999999" [nzPrecision]="2" [nzStep]="0.1" nzPlaceHolder="Digital" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="form-button-container">
+      <button nz-button nzType="primary" (click)="onSave()" [nzLoading]="saveLoading">保存</button>
+      <button nz-button nzType="default" (click)="onReset()" [nzLoading]="saveLoading">重置</button>
+      <button nz-button nzType="default" (click)="onBack()">关闭</button>
+    </div>
+  </div>
+</nz-modal>
+<dormitory-room-selector (dormitoryRoomSelectedEvent)="handleDormitoryRoomSelectedEvent($event)"></dormitory-room-selector>
+<student-selector (studentSelectedEvent)="handleStudentSelectedEvent($event)"></student-selector>

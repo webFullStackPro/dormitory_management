@@ -1,0 +1,97 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="modalWidth" (nzOnCancel)="onBack()">
+  <div *nzModalTitle>{{ title }}</div>
+  <ng-container *nzModalContent>
+    <form [formGroup]="dormitoryRoomForm" (keydown.enter)="$event.preventDefault()">
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="buildingName" nzRequired>楼栋名称</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择楼栋名称'">
+              <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input nz-input formControlName="buildingName" placeholder="请选择楼栋名称" readonly />
+              </nz-input-group>
+              <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch (click)="findDormitoryBuilding()"><nz-icon nzType="search" /></button>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="roomNumber" nzRequired>房间号</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请输入房间号'">
+              <input nz-input formControlName="roomNumber" placeholder="请输入房间号" maxlength="32"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="floorNumber" nzRequired>所在楼层</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择所在楼层'">
+            <nz-input-number formControlName="floorNumber" nzMin="1" nzMax="128" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="roomType" nzRequired>房间类型</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择房间类型'">
+              <nz-select formControlName="roomType">
+                <nz-option nzLabel="双人间" [nzValue]="2"></nz-option>
+                <nz-option nzLabel="四人间" [nzValue]="4"></nz-option>
+                <nz-option nzLabel="六人间" [nzValue]="6"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="hasBathroom" nzRequired>是否有独立卫生间</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择是否有独立卫生间'">
+              <nz-select formControlName="hasBathroom">
+                <nz-option nzLabel="否" [nzValue]="0"></nz-option>
+                <nz-option nzLabel="是" [nzValue]="1"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="hasAirConditioning" nzRequired>是否有空调</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择是否有空调'">
+              <nz-select formControlName="hasAirConditioning">
+                <nz-option nzLabel="否" [nzValue]="0"></nz-option>
+                <nz-option nzLabel="是" [nzValue]="1"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="hasWifi" nzRequired>是否有无线网络</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择是否有无线网络'">
+              <nz-select formControlName="hasWifi">
+                <nz-option nzLabel="否" [nzValue]="0"></nz-option>
+                <nz-option nzLabel="是" [nzValue]="1"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="form-button-container">
+      <button nz-button nzType="primary" (click)="onSave()" [nzLoading]="saveLoading">保存</button>
+      <button nz-button nzType="default" (click)="onReset()" [nzLoading]="saveLoading">重置</button>
+      <button nz-button nzType="default" (click)="onBack()">关闭</button>
+    </div>
+  </div>
+</nz-modal>
+<dormitory-building-selector (dormitoryBuildingSelectedEvent)="handleDormitoryBuildingSelectedEvent($event)"></dormitory-building-selector>

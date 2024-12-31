@@ -1,0 +1,68 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="modalWidth" (nzOnCancel)="onBack()">
+  <div *nzModalTitle>{{ title }}</div>
+  <ng-container *nzModalContent>
+    <form nz-form class="search-form" [formGroup]="searchForm" (keydown.enter)="onSearch()" nzLayout="inline">
+      <nz-form-item>
+        <nz-form-label nzFor="name">楼栋名称</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="name" placeholder="请输入楼栋名称" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="buildingType">楼栋类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="buildingType" class="custom-select-width">
+            <nz-option nzLabel="男生" [nzValue]="1"></nz-option>
+            <nz-option nzLabel="女生" [nzValue]="2"></nz-option>
+            <nz-option nzLabel="按楼层男女混住" [nzValue]="3"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="staffName">宿管姓名</nz-form-label>
+        <nz-form-control>
+          <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input nz-input formControlName="staffName" placeholder="请选择宿管姓名" readonly />
+          </nz-input-group>
+          <ng-template #suffixIconButton>
+            <button nz-button nzType="primary" nzSearch (click)="findStaff()"><nz-icon nzType="search" /></button>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <button nz-button type="button" nzType="primary" [nzLoading]="searchLoading" (click)="onSearch()">查询</button>
+      <button nz-button type="button" class="margin-button" (click)="onReset()">重置</button>
+    </form>
+    <nz-table #basicTable [nzData]="listOfData" [nzTotal]="total" [nzLoading]="searchLoading" nzSize="small">
+      <thead>
+        <tr>
+          <th>楼栋名称</th>
+          <th>建筑年份</th>
+          <th>楼层</th>
+          <th>楼栋类型</th>
+          <th>宿管姓名</th>
+          <th>位置</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data" (dblclick)="onRowDblClick(data, $event)">
+          <td>{{data.name}}</td>
+          <td>{{data.constructionYear}}</td>
+          <td>{{data.floorNumber}}</td>
+          <td>
+            <ng-container *ngIf="data.buildingType === 1">男生</ng-container>
+            <ng-container *ngIf="data.buildingType === 2">女生</ng-container>
+            <ng-container *ngIf="data.buildingType === 3">按楼层男女混住</ng-container>
+          </td>
+          <td>{{data.staffName}}</td>
+          <td>{{data.buildingLocation}}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="form-button-container">
+      <button nz-button nzType="default" (click)="onBack()">关闭</button>
+    </div>
+  </div>
+</nz-modal>
+<staff-selector (staffSelectedEvent)="handleStaffSelectedEvent($event)"></staff-selector>
